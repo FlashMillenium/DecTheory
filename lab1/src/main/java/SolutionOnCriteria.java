@@ -49,7 +49,7 @@ public class SolutionOnCriteria {
         return result;
     }
 
-    public static List<Integer> HurwitzCriteria(List<List<Integer>> decisionTable, double c){
+    public static List<Integer> hurwitzCriteria(List<List<Integer>> decisionTable, double c){
 
         HashMap<Double, Integer> mapHW = IntStream.range(0,decisionTable.size()).parallel()
                 .mapToObj((i) -> makeHwMap(i,decisionTable,c))
@@ -62,7 +62,7 @@ public class SolutionOnCriteria {
         return result;
     }
 
-    public static List<Integer> BayesLaplasCriteria(List<List<Integer>> decisionTable, List<Double> probabilityList) {
+    public static List<Integer> bayesLaplasCriteria(List<List<Integer>> decisionTable, List<Double> probabilityList) {
 
         HashMap<Double, Integer> mapBL = IntStream.range(0, decisionTable.size()).parallel()
                 .mapToObj((i) -> makeBlMap(i, decisionTable, probabilityList))

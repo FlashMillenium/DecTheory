@@ -28,7 +28,7 @@ public class Main {
 
         double c = 0.5;
 
-        List<Integer> resultHW = SolutionOnCriteria.HurwitzCriteria(decisionTable,c);
+        List<Integer> resultHW = SolutionOnCriteria.hurwitzCriteria(decisionTable,c);
 
         System.out.println("result with HurwitzCriteria "+resultHW);
 
@@ -53,7 +53,7 @@ public class Main {
 
         List<Double> probabilityList = Arrays.asList(new Double[]{0.15, 0.2, 0.25, 0.3, 0.1});
 
-        List<Integer> resultBL = SolutionOnCriteria.BayesLaplasCriteria(gendecisionTable, probabilityList);
+        List<Integer> resultBL = SolutionOnCriteria.bayesLaplasCriteria(gendecisionTable, probabilityList);
 
         System.out.println("result BL: " + resultBL);
     }
