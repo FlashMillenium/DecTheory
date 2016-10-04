@@ -19,6 +19,9 @@ public class Main {
         mainCriteriaTable.add(Arrays.asList(0.003,   0.25, 0.167, 80000d, 600d, 3300000d, 0.1, 92d));
         mainCriteriaTable.add(Arrays.asList(0.001,   0.75, 0.038, 85000d, 600d, 2500000d, 0.9, 11d));
 
+        String[] nameCriteria = {"Смена" , "Час Пик", "Невское время", "Вечерний Петербург",
+                "СПб ведомости", "Деловой Петербург", "Реклама - Шанс"};
+
         List<Double> restrictionList = Arrays.asList(0.01, 0.1, 0.038, 44000d, 400d, 2500000d, 0.3, 10d);
 
         System.out.println("Table for Main Criteria");
@@ -28,8 +31,15 @@ public class Main {
                 IntStream.range(0,s.size()).filter(i -> s.get(i) < restrictionList.get(i)).count() == 0)
                 .collect(Collectors.toList());
 
+        int index = IntStream.range(0, mainCriteriaTable.size()).filter(i -> mainCriteriaTable.get(i)
+                .equals(matchingList.get(0))).findFirst().getAsInt();
+
         System.out.println("\nMatching lists for Main Criteria:");
-        matchingList.forEach(System.out::println);
+//        matchingList.forEach(System.out::println); // win tuple
+//        System.out.println("Index is " + index);  // index win tuple and namecriteria
+//        System.out.println("Best newspaper for advertising: " + nameCriteria[index]);
+        System.out.println("| " + index + " | " + nameCriteria[index] + " | " + matchingList.get(0) + " |");
+
 
         ArrayList<List<Double>> generalCriteriaTable = new ArrayList<>();
         generalCriteriaTable.add(Arrays.asList(10d, 2d,  3d, 2d, 2d, 4d));
@@ -68,10 +78,28 @@ public class Main {
                 .filter(e -> checkListEquals(e.values().stream().findFirst().get()))
                 .forEach(listalpha::add);
 
-        System.out.println("\nAlpha and win tuple:");
-        listalpha.forEach(e -> System.out.println(e.keySet().stream().findFirst().get() + " =" +
-                " " + e.values().stream().findFirst().get().get(0)));
+        HashMap<List<Double>, List<Double>> altHM = new HashMap<>();
+        listalpha.forEach(e -> altHM.put(e.values().stream().findFirst().get().get(0)
+                ,e.keySet().stream().findFirst().get()));
 
+
+        HashMap<List<Double>, List<List<Double>>> altHMSecond = new HashMap<>();
+        for(HashMap<List<Double>, List<List<Double>>> e: listalpha) {
+            if(!altHMSecond.containsKey(e.values().stream().findFirst().get().get(0))) {
+                altHMSecond.put(e.values().stream().findFirst().get().get(0)
+                        , new ArrayList<>());
+            }
+            altHMSecond.get(e.values().stream().findFirst().get().get(0)).add(e.keySet().stream().findFirst().get());
+
+        }
+
+
+        System.out.println("\nAlpha and win tuple:");
+//        listalpha.forEach(e -> System.out.println(e.keySet().stream().findFirst().get() + " =" +
+//                " " + e.values().stream().findFirst().get().get(0))); // alpha -> win tuple
+//        altHM.entrySet().forEach(System.out::println);  // one win tuple -> one alpha
+//        System.out.println(listalpha.get(0 /* can be random number between 0 and listalpha.size*/)); // simple random output
+          altHMSecond.entrySet().forEach(System.out::println); // one win tuple -> several alpha
     }
 
 
