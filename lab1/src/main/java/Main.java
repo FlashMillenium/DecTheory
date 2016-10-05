@@ -1,4 +1,5 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -6,31 +7,31 @@ import java.util.stream.IntStream;
 
 public class Main {
 
-    public static void main(String args[]){
+    public static void main(String args[]) {
 
-        ArrayList<List<Integer>> decisionTable = new ArrayList<>();
-        decisionTable.add(Arrays.asList(new Integer[]{ 15, 10,  0, -6, 17}));
-        decisionTable.add(Arrays.asList(new Integer[]{  3, 14,  8,  9,  2}));
-        decisionTable.add(Arrays.asList(new Integer[]{  1,  5, 14, 20, -3}));
-        decisionTable.add(Arrays.asList(new Integer[]{  7, 19, 10,  2,  0}));
+        List<List<Integer>> decisionTable = new ArrayList<>();
+        decisionTable.add(Arrays.asList(15, 10, 0, -6, 17));
+        decisionTable.add(Arrays.asList(3, 14, 8, 9, 2));
+        decisionTable.add(Arrays.asList(1, 5, 14, 20, -3));
+        decisionTable.add(Arrays.asList(7, 19, 10, 2, 0));
 
         System.out.println("Decision table: ");
-        decisionTable.stream().forEach((s) -> System.out.println(s.toString()));
+        decisionTable.forEach((s) -> System.out.println(s.toString()));
 
         List resultMM = SolutionOnCriteria.minMaxCriteria(decisionTable);
 
-        System.out.println("result with MinMaxCriteria: " +resultMM);
+        System.out.println("result with MinMaxCriteria: " + resultMM);
 
         List resultS = SolutionOnCriteria.savageCriteria(decisionTable);
 
         System.out.println("result with SavageCriteria: " + resultS);
 
 
-        double c = 0.5;
+        double c = 0.8;
 
-        List<Integer> resultHW = SolutionOnCriteria.hurwitzCriteria(decisionTable,c);
+        List<Integer> resultHW = SolutionOnCriteria.hurwitzCriteria(decisionTable, c);
 
-        System.out.println("result with HurwitzCriteria "+resultHW);
+        System.out.println("result with HurwitzCriteria " + resultHW);
 
 
         ///create decision table for baies-laplase solution
@@ -38,20 +39,20 @@ public class Main {
         final int goodPrice = 49, badPrice = 15, stockPrice = 25;
 
 
-        List<List<Integer>> gendecisionTable = IntStream.iterate(100, i-> i+50).limit(5).mapToObj((supply) ->
-                IntStream.iterate(100, i->i+50).limit(5).boxed()
+        List<List<Integer>> gendecisionTable = IntStream.iterate(100, i -> i + 50).limit(5).mapToObj((supply) ->
+                IntStream.iterate(100, i -> i + 50).limit(5).boxed()
                         .map((demand) ->
-                                (supply > demand ? demand*goodPrice : supply*goodPrice)
-                                        - (stockPrice*supply) +
-                                        (supply > demand ? badPrice*(supply-demand): 0)
+                                (supply > demand ? demand * goodPrice : supply * goodPrice)
+                                        - (stockPrice * supply) +
+                                        (supply > demand ? badPrice * (supply - demand) : 0)
                         )
                         .collect(Collectors.toList()))
                 .collect(Collectors.toList());
 
         System.out.println("Generate table:");
-        gendecisionTable.stream().forEach((s) -> System.out.println(s.toString()));
+        gendecisionTable.forEach((s) -> System.out.println(s.toString()));
 
-        List<Double> probabilityList = Arrays.asList(new Double[]{0.15, 0.2, 0.25, 0.3, 0.1});
+        List<Double> probabilityList = Arrays.asList(0.2, 0.15d, 0.35d, 0.25d, 0.05d);
 
         List<Integer> resultBL = SolutionOnCriteria.bayesLaplasCriteria(gendecisionTable, probabilityList);
 
