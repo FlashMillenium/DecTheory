@@ -9,13 +9,13 @@ public class Main {
     public static void main(String args[]){
 
         ArrayList<List<Integer>> decisionTable = new ArrayList<>();
-        decisionTable.add(Arrays.asList(new Integer[]{ 15, 10,  0, -6, 17}));
-        decisionTable.add(Arrays.asList(new Integer[]{  3, 14,  8,  9,  2}));
-        decisionTable.add(Arrays.asList(new Integer[]{  1,  5, 14, 20, -3}));
-        decisionTable.add(Arrays.asList(new Integer[]{  7, 19, 10,  2,  0}));
+        decisionTable.add(Arrays.asList(15, 10, 0, -6, 17));
+        decisionTable.add(Arrays.asList(3, 14, 8, 9, 2));
+        decisionTable.add(Arrays.asList(1, 5, 14, 20, -3));
+        decisionTable.add(Arrays.asList(7, 19, 10, 2, 0));
 
         System.out.println("Decision table: ");
-        decisionTable.stream().forEach((s) -> System.out.println(s.toString()));
+        decisionTable.forEach((s) -> System.out.println(s.toString()));
 
         List resultMM = SolutionOnCriteria.minMaxCriteria(decisionTable);
 
@@ -26,7 +26,7 @@ public class Main {
         System.out.println("result with SavageCriteria: " + resultS);
 
 
-        double c = 0.5;
+        double c = 0.812;
 
         List<Integer> resultHW = SolutionOnCriteria.hurwitzCriteria(decisionTable,c);
 
@@ -34,6 +34,7 @@ public class Main {
 
 
         ///create decision table for baies-laplase solution
+
 
         final int goodPrice = 49, badPrice = 15, stockPrice = 25;
 
@@ -49,9 +50,9 @@ public class Main {
                 .collect(Collectors.toList());
 
         System.out.println("Generate table:");
-        gendecisionTable.stream().forEach((s) -> System.out.println(s.toString()));
+        gendecisionTable.forEach((s) -> System.out.println(s.toString()));
 
-        List<Double> probabilityList = Arrays.asList(new Double[]{0.15, 0.2, 0.25, 0.3, 0.1});
+        List<Double> probabilityList = Arrays.asList(0.15, 0.2, 0.25, 0.3, 0.1);
 
         List<Integer> resultBL = SolutionOnCriteria.bayesLaplasCriteria(gendecisionTable, probabilityList);
 
