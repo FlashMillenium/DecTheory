@@ -2,7 +2,6 @@ package ru.spbstu.dtheory.dss;
 
 import com.sun.istack.internal.NotNull;
 
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,11 +11,6 @@ import java.util.stream.Stream;
 import static java.util.Comparator.comparingInt;
 import static java.util.stream.IntStream.of;
 import static java.util.stream.IntStream.range;
-
-/**
- * Created by mal on 11/16/16.
- */
-
 
 public class Main {
     public static void main(String[] args) {
@@ -39,7 +33,8 @@ public class Main {
                 + " win count: " + e.getValue()));
 //        IntStream.range(0, dominationWinList.size())
 //                .forEach(e -> System.out.println("Variant "+ parameterName.get(e) + " binary relation\n" +
-//                        "Win " + itemName.get(dominationWinList.get(e).getKey()) + " with sum " + dominationWinList.get(e).getValue()));
+//                        "Win " + itemName.get(dominationWinList.get(e).getKey())
+//                  + " with sum " + dominationWinList.get(e).getValue()));
 
         List<Pair> blockingWinList = blockingSelect(bRelationList);
         List<Pair> blockingResult = getResultSortedPairs(blockingWinList);
@@ -103,19 +98,22 @@ public class Main {
         List<Pair> sr2 = range(0,binaryAlternativeSum.get(0).size()).boxed()
                 .map(binaryVariant ->
                         new Pair(binaryVariant,
-                                of(0,2).map(bAlternative-> binaryAlternativeSum.get(bAlternative).get(binaryVariant).getValue()).sum())
+                                of(0,2).map(bAlternative-> binaryAlternativeSum.get(bAlternative)
+                                                            .get(binaryVariant).getValue()).sum())
                         ).collect(Collectors.toList());
         kMax.add(sr2);
         List<Pair> sr3 = range(0,binaryAlternativeSum.get(0).size()).boxed()
                 .map(binaryVariant ->
                         new Pair(binaryVariant,
-                                of(0,1).map(bAlternative-> binaryAlternativeSum.get(bAlternative).get(binaryVariant).getValue()).sum())
+                                of(0,1).map(bAlternative-> binaryAlternativeSum.get(bAlternative)
+                                                            .get(binaryVariant).getValue()).sum())
                 ).collect(Collectors.toList());
         kMax.add(sr3);
         List<Pair> sr4 = range(0,binaryAlternativeSum.get(0).size()).boxed()
                 .map(binaryVariant ->
                         new Pair(binaryVariant,
-                                of(0).map(bAlternative-> binaryAlternativeSum.get(bAlternative).get(binaryVariant).getValue()).sum())
+                                of(0).map(bAlternative-> binaryAlternativeSum.get(bAlternative)
+                                                            .get(binaryVariant).getValue()).sum())
                 ).collect(Collectors.toList());
         kMax.add(sr4);
         return kMax;
